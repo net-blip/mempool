@@ -59,7 +59,7 @@
     display: flex;
     flex-direction: row;
   }
-  &.lbtc-pegs-stats { 
+  &.lbtc-pegs-stats {
     display: flex;
     flex-direction: row;
   }
@@ -137,14 +137,14 @@
 .latest-transactions {
   width: 100%;
   text-align: left;
-  table-layout:fixed;
+  table-layout: fixed;
   tr, td, th {
     border: 0px;
     padding-top: 0.71rem !important;
     padding-bottom: 0.75rem !important;
   }
   td {
-    overflow:hidden;
+    overflow: hidden;
     width: 25%;
   }
   .table-cell-satoshis {
@@ -177,6 +177,7 @@
     text-align: right;
   }
 }
+
 .skeleton-loader-transactions {
   max-width: 250px;
   position: relative;
@@ -225,14 +226,14 @@
 .lastest-replacements-table {
   width: 100%;
   text-align: left;
-  table-layout:fixed;
+  table-layout: fixed;
   tr, td, th {
     border: 0px;
     padding-top: 0.71rem !important;
     padding-bottom: 0.75rem !important;
   }
   td {
-    overflow:hidden;
+    overflow: hidden;
     width: 25%;
   }
   .table-cell-txid {
@@ -242,8 +243,7 @@
   .table-cell-old-fee {
     width: 25%;
     text-align: end;
-
-    @media(max-width: 1080px) {
+    @media (max-width: 1080px) {
       display: none;
     }
   }
@@ -256,7 +256,6 @@
     padding-right: 0;
     padding-left: 5px;
     text-align: end;
-
     .badge {
       margin-left: 5px;
     }
@@ -272,7 +271,8 @@
     height: 370px;
   }
 }
-.loadingGraphs{
+
+.loadingGraphs {
   height: 250px;
   display: grid;
   place-items: center;
@@ -386,7 +386,6 @@
   max-height: 410px;
   max-width: 410px;
   margin: auto;
-
   @media (min-width: 768px) {
     max-height: 344px;
     max-width: 344px;
@@ -402,7 +401,6 @@
   background: none;
   border: solid 2px var(--primary);
   cursor: pointer;
-
   &.active {
     background: var(--primary);
   }
@@ -436,14 +434,12 @@
 
 .liquid-indexing {
   position: relative;
-
   .liquid-indexing-banner {
     position: absolute;
     left: 90px;
     top: -288px;
     transform: translateX(-50%);
   }
-
   .liquid-indexing-badge {
     font-size: 11px;
     line-height: 1.2;
