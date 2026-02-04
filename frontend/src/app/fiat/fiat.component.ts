@@ -37,5 +37,4 @@ export class FiatComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.currencySubscription.unsubscribe();
   }
-
 }
