@@ -13,7 +13,6 @@ export interface Transaction {
   vout: Vout[];
   status: Status;
 
-  // Custom properties
   firstSeen?: number;
   feePerVsize?: number;
   effectiveFeePerVsize?: number;
@@ -72,16 +71,11 @@ export interface Vin {
   sequence: any;
   witness?: string[];
   prevout: Vout;
-  // Elements
   is_pegin?: boolean;
   issuance?: Issuance;
-  // Custom
   lazy?: boolean;
-  // Ord
   isInscription?: boolean;
-  // temporary field for extracted raw simplicity scripts
   inner_simplicityscript?: string;
-  // parsed taproot info
   taprootInfo?: ParsedTaproot;
 }
 
@@ -103,11 +97,9 @@ export interface Vout {
   scriptpubkey_type: string;
   scriptpubkey_address?: string;
   value: number;
-  // Elements
   valuecommitment?: number;
   asset?: string;
   pegout?: Pegout;
-  // Ord
   isRunestone?: boolean;
 }
 
