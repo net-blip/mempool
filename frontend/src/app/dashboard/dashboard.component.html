@@ -1,30 +1,31 @@
-
 <div class="container-xl dashboard-container" *ngIf="(network$ | async) !== 'liquid'; else liquidDashboard">
   <div class="row row-cols-1 row-cols-md-2" *ngIf="{ value: (mempoolInfoData$ | async) } as mempoolInfoData">
-    <ng-container>
-      <div class="col card-wrapper">
-        <div class="main-title" i18n="fees-box.transaction-fees">Transaction Fees</div>
-        <div class="card">
-          <div class="card-body less-padding">
-            <app-fees-box class="d-block"></app-fees-box>
-          </div>
+    
+    <div class="col card-wrapper">
+      <div class="main-title" i18n="fees-box.transaction-fees">Transaction Fees</div>
+      <div class="card">
+        <div class="card-body less-padding">
+          <app-fees-box class="d-block"></app-fees-box>
         </div>
       </div>
-      <div class="col">
-        <app-difficulty></app-difficulty>
-      </div>
-    </ng-container>
+    </div>
+
+    <div class="col">
+      <app-difficulty></app-difficulty>
+    </div>
+
     <div class="col">
       <div class="card graph-card">
         <div class="card-body pl-lg-3 pr-lg-3 pl-2 pr-2">
-          <a class="title-link mb-0" style="margin-top: -2px" href="" [routerLink]="['/mempool-block/0' | relativeUrl]">
-            <h5 class="card-title d-inline"><span>Mempool Goggles&trade;</span> : {{ goggleCycle[goggleIndex].name }}</h5>
-            <span>&nbsp;</span>
+          <a class="title-link mb-0" style="margin-top: -2px" [routerLink]="['/mempool-block/0' | relativeUrl]">
+            <h5 class="card-title d-inline">
+              <span>Mempool Goggles&trade;</span> : {{ goggleCycle[goggleIndex].name }}
+            </h5>
             <fa-icon [icon]="['fas', 'external-link-alt']" [fixedWidth]="true" style="vertical-align: text-top; font-size: 13px; color: var(--title-fg)"></fa-icon>
           </a>
           <div class="quick-filter">
             <div class="btn-group btn-group-toggle">
-              <label class="btn btn-primary btn-xs" [class.active]="filter.index === goggleIndex"  *ngFor="let filter of goggleCycle">
+              <label class="btn btn-primary btn-xs" [class.active]="filter.index === goggleIndex" *ngFor="let filter of goggleCycle">
                 <input type="radio" [value]="'3m'" fragment="3m" (click)="setFilter(filter.index)" [attr.data-cy]="'3m'"> {{ filter.name }}
               </label>
             </div>
@@ -35,35 +36,36 @@
               [resolution]="goggleResolution"
               [filterFlags]="goggleFlags"
               [filterMode]="goggleMode"
-              [gradientMode]="gradientMode"
-            ></app-mempool-block-overview>
+              [gradientMode]="gradientMode">
+            </app-mempool-block-overview>
           </div>
         </div>
       </div>
     </div>
+
     <div class="col">
       <div class="card graph-card">
         <div class="card-body">
           <ng-container *ngTemplateOutlet="mempoolTable; context: { $implicit: mempoolInfoData }"></ng-container>
-            <h5 class="card-title mt-3" i18n="dashboard.incoming-transactions">Incoming Transactions</h5>
-            <div class="mempool-graph" *ngIf="(mempoolStats$ | async) as mempoolStats">
-              <app-incoming-transactions-graph
-                [height]="incomingGraphHeight"
-                [left]="50"
-                [right]="20"
-                [data]="mempoolStats?.weightPerSecond"
-                [windowPreferenceOverride]="'2h'"
-                ></app-incoming-transactions-graph>
-            </div>
+          <h5 class="card-title mt-3" i18n="dashboard.incoming-transactions">Incoming Transactions</h5>
+          <div class="mempool-graph" *ngIf="(mempoolStats$ | async) as mempoolStats">
+            <app-incoming-transactions-graph
+              [height]="incomingGraphHeight"
+              [left]="50"
+              [right]="20"
+              [data]="mempoolStats?.weightPerSecond"
+              [windowPreferenceOverride]="'2h'">
+            </app-incoming-transactions-graph>
+          </div>
         </div>
       </div>
     </div>
+
     <div class="col" style="max-height: 410px">
       <div class="card" *ngIf="(network$ | async) !== 'liquidtestnet'; else latestBlocks">
         <div class="card-body">
-          <a class="title-link" href="" [routerLink]="['/rbf' | relativeUrl]">
+          <a class="title-link" [routerLink]="['/rbf' | relativeUrl]">
             <h5 class="card-title d-inline" i18n="dashboard.recent-rbf-replacements">Recent Replacements</h5>
-            <span>&nbsp;</span>
             <fa-icon [icon]="['fas', 'external-link-alt']" [fixedWidth]="true" style="vertical-align: text-top; font-size: 13px; color: var(--title-fg)"></fa-icon>
           </a>
           <table class="table lastest-replacements-table">
@@ -95,9 +97,8 @@
       <ng-template #latestBlocks>
         <div class="card">
           <div class="card-body">
-            <a class="title-link" href="" [routerLink]="['/blocks' | relativeUrl]">
+            <a class="title-link" [routerLink]="['/blocks' | relativeUrl]">
               <h5 class="card-title d-inline" i18n="dashboard.recent-blocks">Recent Blocks</h5>
-              <span>&nbsp;</span>
               <fa-icon [icon]="['fas', 'external-link-alt']" [fixedWidth]="true" style="vertical-align: text-top; font-size: 13px; color: var(--title-fg)"></fa-icon>
             </a>
             <table class="table lastest-blocks-table">
@@ -109,8 +110,8 @@
               </thead>
               <tbody *ngIf="blocks$ | async as blocks; else blocksSkeleton">
                 <tr *ngFor="let block of blocks; let i = index; trackBy: trackByBlock">
-                  <td class="table-cell-height" ><a [routerLink]="['/block' | relativeUrl, block.id]" [state]="{ data: { block: block } }">{{ block.height }}</a></td>
-                  <td class="table-cell-mined" ><app-time kind="since" [time]="block.timestamp" [fastRender]="true" [showTooltip]="true"></app-time></td>
+                  <td class="table-cell-height"><a [routerLink]="['/block' | relativeUrl, block.id]" [state]="{ data: { block: block } }">{{ block.height }}</a></td>
+                  <td class="table-cell-mined"><app-time kind="since" [time]="block.timestamp" [fastRender]="true" [showTooltip]="true"></app-time></td>
                   <td class="table-cell-transaction-count">{{ block.tx_count | number }}</td>
                   <td class="table-cell-size">
                     <div class="progress">
@@ -125,6 +126,7 @@
         </div>
       </ng-template>
     </div>
+
     <div class="col" style="max-height: 410px">
       <div class="card">
         <div class="card-body">
@@ -143,13 +145,15 @@
                     <app-truncate [text]="transaction.txid" [lastChars]="5"></app-truncate>
                   </a>
                 </td>
-                <td class="table-cell-satoshis"><app-amount *ngIf="(network$ | async) !== 'liquidtestnet'; else liquidAmount" [satoshis]="transaction.value" digitsInfo="1.2-4" [noFiat]="true"></app-amount><ng-template #liquidAmount i18n="shared.confidential">Confidential</ng-template></td>
-                <td class="table-cell-fiat" *ngIf="(network$ | async) === ''" ><app-fiat [value]="transaction.value" digitsInfo="1.0-0"></app-fiat></td>
+                <td class="table-cell-satoshis">
+                  <app-amount *ngIf="(network$ | async) !== 'liquidtestnet'; else liquidAmount" [satoshis]="transaction.value" digitsInfo="1.2-4" [noFiat]="true"></app-amount>
+                  <ng-template #liquidAmount i18n="shared.confidential">Confidential</ng-template>
+                </td>
+                <td class="table-cell-fiat" *ngIf="(network$ | async) === ''"><app-fiat [value]="transaction.value" digitsInfo="1.0-0"></app-fiat></td>
                 <td class="table-cell-fees"><app-fee-rate [fee]="transaction.fee" [weight]="transaction.vsize * 4"></app-fee-rate></td>
               </tr>
             </tbody>
           </table>
-          <div class="">&nbsp;</div>
         </div>
       </div>
     </div>
@@ -158,9 +162,8 @@
 
 <ng-template #liquidDashboard>
   <div class="container-xl dashboard-container" *ngIf="(auditStatus$ | async)?.isAuditSynced; else auditInProgress">
-
     <div class="row row-cols-1 row-cols-md-2">
-
+      
       <div class="col card-wrapper liquid">
         <div class="main-title" i18n="liquid.federation-holdings">Liquid Federation Holdings</div>
         <div class="card">
@@ -178,7 +181,7 @@
           </div>
         </div>
       </div>
-  
+
       <div class="col">
         <div class="card-liquid card">
           <h5 class="card-title" style="padding-top: 20px;" i18n="dashboard.lbtc-supply-against-btc-holdings">LBTC Supply Against BTC Holdings</h5>
@@ -187,9 +190,9 @@
           </div>
         </div>
       </div>
-  
+
       <div class="col" style="margin-bottom: 1.47rem">
-        <div class="card-liquid card"> 
+        <div class="card-liquid card">
           <div class="card-body">
             <app-reserves-ratio-stats [fullHistory$]="fullHistory$" [emergencyUtxosStats$]="emergencySpentUtxosStats$"></app-reserves-ratio-stats>
             <app-reserves-ratio [currentPeg]="currentPeg$ | async" [currentReserves]="currentReserves$ | async"></app-reserves-ratio>
@@ -232,7 +235,7 @@
 <ng-template #recentTransactionsSkeleton>
   <tbody>
     <tr *ngFor="let i of [1,2,3,4,5,6]">
-      <td class="table-cell-txid"><div class="skeleton-loader skeleton-loader-transactions"></div> </td>
+      <td class="table-cell-txid"><div class="skeleton-loader skeleton-loader-transactions"></div></td>
       <td class="table-cell-satoshis"><div class="skeleton-loader skeleton-loader-transactions"></div></td>
       <td class="table-cell-fiat" *ngIf="(network$ | async) === ''"><div class="skeleton-loader skeleton-loader-transactions"></div></td>
       <td class="table-cell-fees"><div class="skeleton-loader skeleton-loader-transactions"></div></td>
@@ -243,7 +246,7 @@
 <ng-template #blocksSkeleton>
   <tbody>
     <tr *ngFor="let i of [1,2,3,4,5,6]">
-      <td class="table-cell-height"><div class="skeleton-loader skeleton-loader-transactions"></div> </td>
+      <td class="table-cell-height"><div class="skeleton-loader skeleton-loader-transactions"></div></td>
       <td class="table-cell-mined"><div class="skeleton-loader skeleton-loader-transactions"></div></td>
       <td class="table-cell-transaction-count"><div class="skeleton-loader skeleton-loader-transactions"></div></td>
       <td class="table-cell-size"><div class="skeleton-loader skeleton-loader-transactions"></div></td>
@@ -260,13 +263,11 @@
 </ng-template>
 
 <ng-template #loadingbig>
-  <span class="skeleton-loader skeleton-loader-big" ></span>
+  <span class="skeleton-loader skeleton-loader-big"></span>
 </ng-template>
 
 <ng-template #emptyBlock>
-  <div class="col">
-
-  </div>
+  <div class="col"></div>
 </ng-template>
 
 <ng-template #mempoolTable let-mempoolInfoData>
@@ -275,7 +276,8 @@
       <h5 *ngIf="!mempoolInfoData.value || mempoolInfoData.value.memPoolInfo.mempoolminfee === mempoolInfoData.value.memPoolInfo.minrelaytxfee || (stateService.env.BASE_MODULE === 'liquid' && mempoolInfoData.value.memPoolInfo.mempoolminfee === 0.000001) else purgingText" class="card-title" i18n="dashboard.minimum-fee|Minimum mempool fee">Minimum fee</h5>
       <ng-template #purgingText><h5 class="card-title" i18n="dashboard.purging|Purgin below fee">Purging</h5></ng-template>
       <p class="card-text" *ngIf="(isLoadingWebSocket$ | async) === false && mempoolInfoData.value; else loading">
-        <ng-template [ngIf]="mempoolInfoData.value.memPoolInfo.mempoolminfee !== mempoolInfoData.value.memPoolInfo.minrelaytxfee">&lt; </ng-template><app-fee-rate [fee]="mempoolInfoData.value.memPoolInfo.mempoolminfee * 100000"></app-fee-rate>
+        <ng-template [ngIf]="mempoolInfoData.value.memPoolInfo.mempoolminfee !== mempoolInfoData.value.memPoolInfo.minrelaytxfee">&lt; </ng-template>
+        <app-fee-rate [fee]="mempoolInfoData.value.memPoolInfo.mempoolminfee * 100000"></app-fee-rate>
       </p>
     </div>
     <div class="item">
@@ -298,9 +300,7 @@
 
 <ng-template #loadingSkeletonLiquid let-auditInProgress="auditInProgress">
   <div class="container-xl dashboard-container" [class.audit-in-progress]="auditInProgress">
-
     <div class="row row-cols-1 row-cols-md-2">
-
       <div class="col card-wrapper liquid">
         <div class="main-title" i18n="liquid.federation-holdings">Liquid Federation Holdings</div>
         <div class="card">
@@ -309,51 +309,7 @@
           </div>
         </div>
       </div>
-
-      <div class="col card-wrapper liquid">
-        <div class="main-title" i18n="liquid.federation-expired-utxos">Federation Timelock-Expired UTXOs</div>
-        <div class="card">
-          <div class="card-body liquid">
-            <app-expired-utxos-stats></app-expired-utxos-stats>
-          </div>
-        </div>
-      </div>
-  
-      <div class="col">
-        <div class="card-liquid card">
-          <h5 class="card-title" style="padding-top: 20px;" i18n="dashboard.lbtc-supply-against-btc-holdings">LBTC Supply Against BTC Holdings</h5>
-          <div class="card-body pl-0" style="padding-top: 25px;">
-            <app-lbtc-pegs-graph [height]="lbtcPegGraphHeight" [auditInProgress]="auditInProgress"></app-lbtc-pegs-graph>
-          </div>
-        </div>
-      </div>
-  
-      <div class="col" style="margin-bottom: 1.47rem">
-        <div class="card-liquid card"> 
-          <div class="card-body">
-            <app-reserves-ratio-stats></app-reserves-ratio-stats>
-            <app-reserves-ratio [auditInProgress]="auditInProgress"></app-reserves-ratio>
-          </div>
-        </div>
-      </div>
-
-      <div class="col">
-        <div class="card card-liquid smaller">
-          <div class="card-body">
-            <app-recent-pegs-stats></app-recent-pegs-stats>
-            <app-recent-pegs-list [widget]="true"></app-recent-pegs-list>
-          </div>
-        </div>
-      </div>
-
-      <div class="col" style="margin-bottom: 1.47rem">
-        <div class="card-liquid card smaller">
-          <div class="card-body">
-            <app-federation-addresses-stats></app-federation-addresses-stats>
-            <app-federation-addresses-list [widget]="true"></app-federation-addresses-list>
-          </div>
-        </div>
-      </div>
+     
     </div>
   </div>
 </ng-template>
