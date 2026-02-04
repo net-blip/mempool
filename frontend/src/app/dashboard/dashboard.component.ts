@@ -208,7 +208,6 @@ export class DashboardComponent implements OnInit, OnDestroy, AfterViewInit {
         switchMap((blocks) => {
           if (this.stateService.env.MINING_DASHBOARD === true) {
             for (const block of blocks) {
-              // @ts-ignore: Need to add an extra field for the template
               block.extras.pool.logo = `/resources/mining-pools/` +
                 block.extras.pool.slug + '.svg';
             }
